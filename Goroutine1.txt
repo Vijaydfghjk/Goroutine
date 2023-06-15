@@ -1,0 +1,22 @@
+package main
+
+import (
+	"fmt"
+)
+
+func details() {
+
+	var age chan int = make(chan int)
+	go func(name string, age chan int) {
+
+		fmt.Println(name, <-age)
+
+	}("Vijay", age)
+	age <- 24
+}
+
+func main() {
+
+	details()
+
+}

@@ -1,0 +1,27 @@
+package main
+
+import (
+	"fmt"
+)
+
+//one function return the goroutine
+
+func User(name string) (string, <-chan int) {
+
+	var age chan int = make(chan int)
+	go func(age chan int) {
+
+		fmt.Println(name, <-age)
+
+	}(age)
+
+	age <- 24
+	return name, age
+
+}
+
+func main() {
+
+	User("Vijay")
+
+}
