@@ -1,0 +1,43 @@
+package main
+
+import "fmt"
+
+func getdata(a chan int) {
+
+	for {
+
+		fmt.Println("value is", <-a)
+
+	}
+
+}
+
+func data(n []int) {
+
+	var a chan int = make(chan int, 3)
+
+	go getdata(a)
+
+	func() {
+
+		for _, v := range n {
+
+			a <- v
+
+		}
+		close(a)
+
+	}()
+
+}
+
+func main() {
+
+	var a []int = make([]int, 4)
+
+	a[0] = 2
+	a[1] = 4
+	a[2] = 8
+	data(a)
+
+}
