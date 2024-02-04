@@ -14,7 +14,7 @@ func getdata(a chan int) {
 
 func data(n []int) {
 
-	var a chan int = make(chan int, 3)
+	var a chan int = make(chan int)
 
 	go getdata(a)
 
