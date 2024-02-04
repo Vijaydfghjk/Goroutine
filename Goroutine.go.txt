@@ -46,6 +46,7 @@ func main() {
    whenever v sent one value for ex: 2 sent go getdata(a)  execute 2
    then  v sent 4 go getdata(a)  execute 4
    like that executing.
+   close(a)// indicate to the channel no more value to sent.
 */
 
 
