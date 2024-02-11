@@ -1,0 +1,33 @@
+package main
+
+import (
+	"fmt"
+)
+
+
+func golangfans(){
+
+     fmt.Println(" everyday is now monday")
+
+}
+
+func main() {
+
+
+	ch8 := make(chan interface{})
+
+	func() {
+
+		fmt.Println(" sunday is now monday")
+
+		select {
+		case a := <-ch8:
+			fmt.Println(" sunday is now monday", a)
+		}
+
+	}()
+
+
+           golangfans()
+
+}
