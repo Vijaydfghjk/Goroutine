@@ -1,0 +1,69 @@
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+func main() {
+	// Create two channels
+	var k chan int = make(chan int)
+	var wg sync.WaitGroup
+	ch1 := make(chan string)
+	ch2 := make(chan string)
+
+	// Goroutine to send "Hello" to ch1 after 2 seconds
+	wg.Add(1)
+	go func() {
+		wg.Done()
+
+		ch1 <- "Hello"
+	}()
+
+	// Goroutine to send "World" to ch2 after 1 second
+	wg.Add(1)
+	go func() {
+		wg.Done()
+
+		ch2 <- "World"
+	}()
+
+	wg.Add(1)
+	go func(a chan int) {
+		wg.Done()
+		k <- 15
+
+	}(k)
+
+	// Select statement to receive from either ch1 or ch2
+	wg.Wait()
+	select {
+	case msg1 := <-ch1:
+		fmt.Println("Received from ch1:", msg1)
+	case msg2 := <-ch2:
+		fmt.Println("Received from ch2:", msg2)
+	case msg3 := <-k:
+		fmt.Println("Received from k:", msg3)
+	}
+}
+
+
+/*
+  Select statement will execute the any one of the channel which is exit first.
+  
+select {
+	case msg1 := <-ch1:
+		fmt.Println("Received from ch1:", msg1)
+	default:
+		fmt.Println("No message received from ch1")
+	}
+	
+	select {
+	case msg2 := <-ch2:
+		fmt.Println("Received from ch2:", msg2)
+	default:
+		fmt.Println("No message received from ch2")
+	}
+
+ */
+
