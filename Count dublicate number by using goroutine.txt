@@ -1,0 +1,49 @@
+package main
+
+import "fmt"
+
+func Demo(a []int) chan int {
+	send := make(chan int)
+	for i := 1; i < len(a); i++ {
+
+		j := i
+		for j >= 1 && a[j-1] > a[j] {
+
+			a[j-1], a[j] = a[j], a[j-1]
+			j--
+		}
+
+	}
+
+	var k int = 1
+	// Finding the Number of dumlicate.
+	//reveive := make(chan int)
+	go func() {
+		for i := 1; i < len(a); i++ {
+
+			if a[i] == a[i-1] {
+
+				a[k] = a[i]
+				k++
+			}
+
+		}
+		send <- k
+		close(send)
+
+	}()
+	return send
+}
+
+func main() {
+
+	a := []int{5, 5, 5, 6, 7, 8, 9, 5}
+
+	m := Demo(a)
+
+	for v := range m {
+
+		fmt.Println("Number of Dublicate :", v)
+	}
+
+}
