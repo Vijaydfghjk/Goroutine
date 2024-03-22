@@ -16,7 +16,7 @@ func main() {
 
 	ch8 := make(chan interface{})
 
-	func() {
+    go  func() {
 
 		fmt.Println(" sunday is now monday")
 
