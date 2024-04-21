@@ -1,0 +1,44 @@
+// You can edit this code!
+// Click here and start typing.
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func Demo(nums []int) {
+
+	max := 0
+	var high chan int = make(chan int)
+	go func() {
+		for i := 0; i < len(nums); i++ {
+
+			if nums[i] > max {
+
+				max = nums[i]
+			}
+		}
+		high <- max
+
+	}()
+	time.Sleep(2 * time.Second)
+	fmt.Println(max)
+	fmt.Println(<-high)
+}
+
+func main() {
+
+	nums := []int{30, 40, 25}
+
+	Demo(nums)
+
+}
+
+
+// Understanding the Goroutine 
+// if we don't use the time package, fmt.Println(max) this will print 0.
+// bcz goroutine is running and it will come back and  until the process, before that 
+// we  are printing the max. so before finding max, we printing the max value 0. 
+
+

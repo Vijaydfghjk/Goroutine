@@ -1,0 +1,30 @@
+package main
+
+import (
+	"fmt"
+)
+
+var num chan int = make(chan int)
+
+func Demo(a []int) {
+
+	for _, val := range a {
+
+		num <- val
+
+	}
+
+	
+}
+
+func main() {
+
+	arr := []int{10, 20, 30}
+
+	go Demo(arr)
+
+	for k := range num {
+
+		fmt.Println(k)
+	}
+}
